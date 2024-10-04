@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Atom\Core\Models\WebsiteArticle;
+
 
 class LoginController extends Controller
 {
@@ -18,6 +20,15 @@ class LoginController extends Controller
      */
     public function index(): View
     {
+        $articles = WebsiteArticle::latest('id')
+        ->take(6)
+        ->has('user')
+        ->with('user:id,username,look')
+        ->get();
+
+        return view('login', [
+        'articles' => $articles
+        ]);
         return view('login');
     }
 
