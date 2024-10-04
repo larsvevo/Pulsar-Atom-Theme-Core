@@ -21,7 +21,7 @@ class LoginController extends Controller
     public function index(): View
     {
         $articles = WebsiteArticle::latest('id')
-        ->take(6)
+        ->take(3)
         ->has('user')
         ->with('user:id,username,look')
         ->get();
